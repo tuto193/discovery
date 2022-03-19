@@ -12,27 +12,31 @@ use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 
 fn get_next_led(x0: u8, y0: u8) -> [[u8; 5]; 5] {
-    let mut led_matrix = [
+    let mut led_matrix: [[u8; 5]; 5] = [
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
     ];
-    let x1, y1 = if y0 == 0 {
+    let x1, y1 = match (x0, y0) {
+        (4, 0) => (4, 0),
+        ()
+        if y0 == 0 {
         if x0 == 4 {
-            4
+            (4, 0)
         } else {
-            x0 + 1
+            (x0 + 1, 0)
         }
     } else if y0 == 4 {
         if x0 == 0 {
-            0
+            (0, 4)
         } else {
-            x0 - 1
+            (x0 - 1, 4)
         }
     } else {
         x0
+    };
     };
 }
 
