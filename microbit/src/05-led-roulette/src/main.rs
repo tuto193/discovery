@@ -19,25 +19,14 @@ fn get_next_led(x0: u8, y0: u8) -> [[u8; 5]; 5] {
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
     ];
-    let x1, y1 = match (x0, y0) {
-        (4, 0) => (4, 0),
-        ()
-        if y0 == 0 {
-        if x0 == 4 {
-            (4, 0)
-        } else {
-            (x0 + 1, 0)
-        }
-    } else if y0 == 4 {
-        if x0 == 0 {
-            (0, 4)
-        } else {
-            (x0 - 1, 4)
-        }
-    } else {
-        x0
+    let (x1, y1) = match (x0, y0) {
+        (4, y) if y < 4 => (4, y0 + 1),
+        (x, 0) if x < 4 => (x0 + 1, 0),
+        (0, y) if y > 0 => (0, y0 - 1),
+        (x, 4) if x > 0 => (x0 - 1, 4),
     };
-    };
+    led_matrix[x1][y1] = 1;
+    led_matrix
 }
 
 #[entry]
